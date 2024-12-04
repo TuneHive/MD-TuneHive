@@ -22,4 +22,10 @@
     <string name="album_cover_desc">Album Cover</string>
     <string name="artist_name_text">Artist Name</string>
     <string name="options_btn_text">Options</string>
+    <string name="previous">previous\n</string>
+    <string name="play_pause">play pause\n</string>
+    <string name="next">next\n</string>
+    <string name="back">back to previous page</string>
+    <string name="favorite">favorite</string>
+    <string name="download">download</string>
 </resources>
