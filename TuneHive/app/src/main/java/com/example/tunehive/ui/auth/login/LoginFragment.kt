@@ -48,7 +48,7 @@ class LoginFragment : Fragment() {
 
         viewModel.loginResult.observe(viewLifecycleOwner) { response ->
             //ganti sesuai dengan response api
-            if (response.message != null) {
+            if (!response.error) {
                 Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
                 val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent)

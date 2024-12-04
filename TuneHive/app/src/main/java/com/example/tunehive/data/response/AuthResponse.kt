@@ -10,5 +10,6 @@ data class UserRequest(
 data class UserResponse(
     val id: String,
     val email: String,
-    val message: String? = null
+    val message: String? = null,
+    val error: Boolean
 )
