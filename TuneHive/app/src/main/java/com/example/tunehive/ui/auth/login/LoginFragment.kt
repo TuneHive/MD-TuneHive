@@ -11,33 +11,33 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tunehive.R
+import com.example.tunehive.databinding.FragmentLoginBinding
+import com.example.tunehive.ui.auth.signup.SignUpFragment
 import com.example.tunehive.ui.main.MainActivity
 
 
 class LoginFragment : Fragment() {
+
     private lateinit var viewModel: LoginViewModel
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!! // Safe access to binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize the ViewModel
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
-        val usernameEditText: EditText = view.findViewById(R.id.usernameEditText)
-        val passwordEditText: EditText = view.findViewById(R.id.passwordEditText)
-        val loginButton: Button = view.findViewById(R.id.signupButton)
-
-        loginButton.setOnClickListener {
-            val email = usernameEditText.text.toString()
-            val password = passwordEditText.text.toString()
+        binding.loginButton.setOnClickListener {
+            val email = binding.usernameEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 viewModel.login(email, password)
@@ -45,20 +45,31 @@ class LoginFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
         }
+        binding.goToSignUpBtn.setOnClickListener {
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_container, SignUpFragment())
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
 
         viewModel.loginResult.observe(viewLifecycleOwner) { response ->
-            //ganti sesuai dengan response api
-            if (!response.error) {
+            if (response.access_token.isNotEmpty()) {
                 Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
                 val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent)
+                requireActivity().finish()
             } else {
-                Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Login failed", Toast.LENGTH_SHORT).show()
             }
         }
 
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

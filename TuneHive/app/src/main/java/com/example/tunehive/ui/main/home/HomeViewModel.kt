@@ -51,5 +51,6 @@ class HomeViewModel : ViewModel() {
             _recentSearches.value = updatedList.take(5)  // Limit to 5 recent searches
         }
     }
+
 }
 

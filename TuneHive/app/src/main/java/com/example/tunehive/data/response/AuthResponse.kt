@@ -1,15 +1,18 @@
 package com.example.tunehive.data.response
 
 
-//sesuaikan dengan api nanti
-data class UserRequest(
-    val email: String,
-    val password: String
-)
 
 data class UserResponse(
-    val id: String,
-    val email: String,
-    val message: String? = null,
-    val error: Boolean
+    val access_token: String,
+    val token_type: String
 )
+
+data class UserSignUp(
+    val email: String? = null,
+    val password: String? = null,
+    val phone: String? = "0000",
+    val description: String? = "",
+    val fullname: String? = email,
+    val username: String? = ""
+)
+

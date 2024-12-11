@@ -36,7 +36,7 @@ class SignUpFragment : Fragment() {
             val password = passwordEditText.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                viewModel.signUp(email, password, null)
+                viewModel.signUp(email, password)
             } else {
                 Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
@@ -44,10 +44,10 @@ class SignUpFragment : Fragment() {
 
         viewModel.signUpResult.observe(viewLifecycleOwner) { response ->
             //ganti sesuai dengan response api
-            if (!response.error) {
+            if (response.email !=null) {
                 Toast.makeText(requireContext(), "Sign-up successful!, Go Login!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Sign Up Gagal", Toast.LENGTH_SHORT).show()
             }
         }
 

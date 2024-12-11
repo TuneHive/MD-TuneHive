@@ -8,7 +8,7 @@ import com.example.tunehive.data.response.UserResponse
 import com.example.tunehive.data.retrofit.ApiConfig
 import kotlinx.coroutines.launch
 
-class LoginViewModel:ViewModel() {
+class LoginViewModel : ViewModel() {
     private val _loginResult = MutableLiveData<UserResponse>()
     val loginResult: LiveData<UserResponse> = _loginResult
 
@@ -18,7 +18,10 @@ class LoginViewModel:ViewModel() {
     fun login(email: String, password: String) {
         viewModelScope.launch {
             try {
-                val response = ApiConfig.getApiService().login(email, password)
+                val response = ApiConfig.getApiService().login(
+                    email = email,
+                    password = password
+                )
                 _loginResult.postValue(response)
             } catch (e: Exception) {
                 _error.postValue(e.message ?: "An error occurred")
