@@ -24,16 +24,19 @@ public final class FragmentLoginBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
+  public final TextView goToSignUpBtn;
+
+  @NonNull
   public final ImageView imgBackground;
+
+  @NonNull
+  public final Button loginButton;
 
   @NonNull
   public final EditText passwordEditText;
 
   @NonNull
   public final TextInputLayout passwordLayout;
-
-  @NonNull
-  public final Button signupButton;
 
   @NonNull
   public final TextView tvFrontSignup;
@@ -44,15 +47,17 @@ public final class FragmentLoginBinding implements ViewBinding {
   @NonNull
   public final TextInputLayout usernameLayout;
 
-  private FragmentLoginBinding(@NonNull ConstraintLayout rootView, @NonNull ImageView imgBackground,
+  private FragmentLoginBinding(@NonNull ConstraintLayout rootView, @NonNull TextView goToSignUpBtn,
+      @NonNull ImageView imgBackground, @NonNull Button loginButton,
       @NonNull EditText passwordEditText, @NonNull TextInputLayout passwordLayout,
-      @NonNull Button signupButton, @NonNull TextView tvFrontSignup,
-      @NonNull EditText usernameEditText, @NonNull TextInputLayout usernameLayout) {
+      @NonNull TextView tvFrontSignup, @NonNull EditText usernameEditText,
+      @NonNull TextInputLayout usernameLayout) {
     this.rootView = rootView;
+    this.goToSignUpBtn = goToSignUpBtn;
     this.imgBackground = imgBackground;
+    this.loginButton = loginButton;
     this.passwordEditText = passwordEditText;
     this.passwordLayout = passwordLayout;
-    this.signupButton = signupButton;
     this.tvFrontSignup = tvFrontSignup;
     this.usernameEditText = usernameEditText;
     this.usernameLayout = usernameLayout;
@@ -85,9 +90,21 @@ public final class FragmentLoginBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.goToSignUpBtn;
+      TextView goToSignUpBtn = ViewBindings.findChildViewById(rootView, id);
+      if (goToSignUpBtn == null) {
+        break missingId;
+      }
+
       id = R.id.img_background;
       ImageView imgBackground = ViewBindings.findChildViewById(rootView, id);
       if (imgBackground == null) {
+        break missingId;
+      }
+
+      id = R.id.loginButton;
+      Button loginButton = ViewBindings.findChildViewById(rootView, id);
+      if (loginButton == null) {
         break missingId;
       }
 
@@ -100,12 +117,6 @@ public final class FragmentLoginBinding implements ViewBinding {
       id = R.id.passwordLayout;
       TextInputLayout passwordLayout = ViewBindings.findChildViewById(rootView, id);
       if (passwordLayout == null) {
-        break missingId;
-      }
-
-      id = R.id.signupButton;
-      Button signupButton = ViewBindings.findChildViewById(rootView, id);
-      if (signupButton == null) {
         break missingId;
       }
 
@@ -127,8 +138,9 @@ public final class FragmentLoginBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentLoginBinding((ConstraintLayout) rootView, imgBackground, passwordEditText,
-          passwordLayout, signupButton, tvFrontSignup, usernameEditText, usernameLayout);
+      return new FragmentLoginBinding((ConstraintLayout) rootView, goToSignUpBtn, imgBackground,
+          loginButton, passwordEditText, passwordLayout, tvFrontSignup, usernameEditText,
+          usernameLayout);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

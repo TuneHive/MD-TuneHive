@@ -8,6 +8,8 @@
         android:minSdkVersion="24"
         android:targetSdkVersion="34" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <permission
         android:name="com.example.tunehive.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
@@ -28,11 +30,14 @@
         android:testOnly="true"
         android:theme="@style/Theme.TuneHive" >
         <activity
-            android:name="com.example.tunehive.ui.auth.AuthActivity"
+            android:name="com.example.tunehive.ui.music.MusicActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.tunehive.ui.main.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main" />
         <activity
-            android:name="com.example.tunehive.ui.main.MainActivity"
+            android:name="com.example.tunehive.ui.auth.AuthActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

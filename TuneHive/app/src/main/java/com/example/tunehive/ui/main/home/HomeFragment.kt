@@ -6,11 +6,14 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tunehive.databinding.FragmentHomeBinding
 import com.example.tunehive.ui.adapter.SongAdapter
+import com.example.tunehive.ui.main.TokenViewModel
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -18,6 +21,8 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var songAdapter: SongAdapter
     private lateinit var recentSearchAdapter: SongAdapter
+    private  val tokenViewModel: TokenViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

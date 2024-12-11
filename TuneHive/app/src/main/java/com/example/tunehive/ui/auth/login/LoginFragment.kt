@@ -20,7 +20,7 @@ class LoginFragment : Fragment() {
 
     private lateinit var viewModel: LoginViewModel
     private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!! // Safe access to binding
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +55,9 @@ class LoginFragment : Fragment() {
         viewModel.loginResult.observe(viewLifecycleOwner) { response ->
             if (response.access_token.isNotEmpty()) {
                 Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
-                val intent = Intent(activity, MainActivity::class.java)
+                val intent = Intent(activity, MainActivity::class.java).apply {
+                    putExtra("ACCESS_TOKEN", response.access_token)
+                }
                 startActivity(intent)
                 requireActivity().finish()
             } else {

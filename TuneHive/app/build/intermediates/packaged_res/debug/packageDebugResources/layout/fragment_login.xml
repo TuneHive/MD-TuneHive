@@ -93,7 +93,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/signupButton"
+        android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
@@ -109,6 +109,7 @@
         app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
 
     <TextView
+        android:id="@+id/goToSignUpBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
@@ -119,6 +120,6 @@
         android:textColor="#F5F5F5"
         android:textAlignment="center"
         android:textSize="15sp"
-        app:layout_constraintTop_toBottomOf="@id/signupButton"/>
+        app:layout_constraintTop_toBottomOf="@id/loginButton"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

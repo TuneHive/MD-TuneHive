@@ -1,6 +1,8 @@
 package com.example.tunehive.ui.main
 
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,6 +14,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private  val tokenViewModel: TokenViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,15 +25,11 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home,
-                R.id.navigation_community,
-                R.id.navigation_mymusic,
-                R.id.navigation_profile
-            )
-        )
+        val accessToken = intent.getStringExtra("ACCESS_TOKEN")
+        if (!accessToken.isNullOrEmpty()) {
+            tokenViewModel.accessToken.value = accessToken
+            Log.d("MainActivity", "Access Token: $accessToken")
+        }
 
         navView.setupWithNavController(navController)
     }

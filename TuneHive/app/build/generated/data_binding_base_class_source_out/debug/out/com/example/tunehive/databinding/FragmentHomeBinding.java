@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -21,7 +21,7 @@ import java.lang.String;
 
 public final class FragmentHomeBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final NestedScrollView rootView;
 
   @NonNull
   public final TextView helloText;
@@ -59,7 +59,7 @@ public final class FragmentHomeBinding implements ViewBinding {
   @NonNull
   public final TextView viewAllText;
 
-  private FragmentHomeBinding(@NonNull ConstraintLayout rootView, @NonNull TextView helloText,
+  private FragmentHomeBinding(@NonNull NestedScrollView rootView, @NonNull TextView helloText,
       @NonNull TextView mostPopularLabel, @NonNull RecyclerView mostPopularRecyclerView,
       @NonNull ImageView profileIcon, @NonNull TextView recentSearchesLabel,
       @NonNull LinearLayout recentSearchesLayout, @NonNull RecyclerView recentSearchesRecyclerView,
@@ -83,7 +83,7 @@ public final class FragmentHomeBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public NestedScrollView getRoot() {
     return rootView;
   }
 
@@ -180,7 +180,7 @@ public final class FragmentHomeBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentHomeBinding((ConstraintLayout) rootView, helloText, mostPopularLabel,
+      return new FragmentHomeBinding((NestedScrollView) rootView, helloText, mostPopularLabel,
           mostPopularRecyclerView, profileIcon, recentSearchesLabel, recentSearchesLayout,
           recentSearchesRecyclerView, recommendationLabel, recommendationRecyclerView, searchBar,
           userName, viewAllText);
