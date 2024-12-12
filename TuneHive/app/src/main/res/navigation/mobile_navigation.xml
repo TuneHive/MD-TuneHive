@@ -15,7 +15,18 @@
         android:id="@+id/navigation_community"
         android:name="com.example.tunehive.ui.main.community.CommunityFragment"
         android:label="@string/tittle_community"
-        tools:layout="@layout/fragment_community" />
+        tools:layout="@layout/fragment_community">
+        <action
+            android:id="@+id/action_navigation_community_to_postFragment"
+            app:destination="@id/postFragment" />
+        <action
+            android:id="@+id/action_navigation_community_to_uploadMusicFragment"
+            app:destination="@id/uploadMusicFragment" />
+        <argument
+            android:name="postText"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_mymusic"
@@ -28,4 +39,26 @@
         android:name="com.example.tunehive.ui.main.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.example.tunehive.ui.main.community.PostFragment"
+        android:label="Create Post"
+        tools:layout="@layout/fragment_post">
+        <action
+            android:id="@+id/action_postFragment_to_communityFragment"
+            app:destination="@id/navigation_community"
+            app:popUpTo="@id/navigation_community"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="postText"
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/uploadMusicFragment"
+        android:name="com.example.tunehive.ui.main.community.UploadMusicFragment"
+        android:label="Upload Music"
+        tools:layout="@layout/fragment_upload_music">
+    </fragment>
 </navigation>
