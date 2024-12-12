@@ -1,19 +1,21 @@
 package com.example.tunehive.ui.main.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.tunehive.R
+import com.example.tunehive.data.response.ListMusicResponseItem
+import com.example.tunehive.data.retrofit.ApiConfig
+import com.example.tunehive.data.retrofit.ApiService
+import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
     // Sample song list (you can replace this with data from a repository or API)
     private val _songs = MutableLiveData<List<Song>>().apply {
         value = listOf(
-            Song("Song One", "Artist A", R.drawable.sample_album_cover),
-            Song("Song Two", "Artist B", R.drawable.sample_album_cover),
-            Song("Another Song", "Artist A", R.drawable.sample_album_cover),
-            Song("Melody One", "Artist C", R.drawable.sample_album_cover),
         )
     }
     val songs: LiveData<List<Song>> = _songs
@@ -26,9 +28,28 @@ class HomeViewModel : ViewModel() {
     private val _recentSearches = MutableLiveData<List<Song>>()
     val recentSearches: LiveData<List<Song>> = _recentSearches
 
+    private val _listSongs = MutableLiveData<List<ListMusicResponseItem>>()
+    val listSongs: LiveData<List<ListMusicResponseItem>> = _listSongs
+
+
     init {
         // Initialize with all songs
         _filteredSongs.value = _songs.value
+        fetchAllSongs()
+    }
+
+    private fun fetchAllSongs() {
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.getApiService().getTopSongs()
+                Log.d("API Response", response.toString()) // Debug response content
+
+                _listSongs.value = response
+            } catch (e: Exception) {
+                Log.e("API Error", "Failed to fetch songs", e)
+                e.printStackTrace()
+            }
+        }
     }
 
     // Function to perform search
@@ -51,6 +72,5 @@ class HomeViewModel : ViewModel() {
             _recentSearches.value = updatedList.take(5)  // Limit to 5 recent searches
         }
     }
-
 }
 

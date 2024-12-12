@@ -1,5 +1,6 @@
 package com.example.tunehive.ui.main.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,8 +13,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tunehive.databinding.FragmentHomeBinding
+import com.example.tunehive.ui.adapter.MostPopularAdapter
+import com.example.tunehive.ui.adapter.RecommendationAdapter
 import com.example.tunehive.ui.adapter.SongAdapter
 import com.example.tunehive.ui.main.TokenViewModel
+import com.example.tunehive.ui.music.MusicActivity
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -21,6 +25,10 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var songAdapter: SongAdapter
     private lateinit var recentSearchAdapter: SongAdapter
+
+    private lateinit var mostPopularAdapter: MostPopularAdapter
+    private lateinit var recommendationAdapter: RecommendationAdapter
+
     private  val tokenViewModel: TokenViewModel by viewModels()
 
 
@@ -38,9 +46,43 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mostPopularAdapter = MostPopularAdapter(emptyList()) { item ->
+            val intent = Intent(requireContext(), MusicActivity::class.java)
+            intent.putExtra("extra_music_id", item.id)  // Send the music ID
+            startActivity(intent)
+        }
+        binding.mostPopularRecyclerView.adapter = mostPopularAdapter
+        binding.mostPopularRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        // Initialize Recommendation Adapter
+        recommendationAdapter = RecommendationAdapter(emptyList()) { item ->
+            val intent = Intent(requireContext(), MusicActivity::class.java)
+            intent.putExtra("extra_music_id", item.id)  // Send the music ID
+            startActivity(intent)        }
+        binding.recommendationRecyclerView.adapter = recommendationAdapter
+        binding.recommendationRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+
+        homeViewModel.listSongs.observe(viewLifecycleOwner) { songs ->
+            val mostPopularSongs = songs.take(10)
+            val recommendedSongs = songs.drop(3).take(10)
+
+            mostPopularAdapter = MostPopularAdapter(mostPopularSongs) { item ->
+                val intent = Intent(requireContext(), MusicActivity::class.java)
+                intent.putExtra("extra_music_id", item.id)  // Send the music ID
+                startActivity(intent)            }
+            binding.mostPopularRecyclerView.adapter = mostPopularAdapter
+
+            recommendationAdapter = RecommendationAdapter(recommendedSongs) { item ->
+                val intent = Intent(requireContext(), MusicActivity::class.java)
+                intent.putExtra("extra_music_id", item.id)  // Send the music ID
+                startActivity(intent)            }
+            binding.recommendationRecyclerView.adapter = recommendationAdapter
+        }
+
+
         songAdapter = SongAdapter()
-        binding.mostPopularRecyclerView.adapter = songAdapter
-        binding.mostPopularRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
 
         // Initialize the adapter for recent searches
         recentSearchAdapter = SongAdapter()

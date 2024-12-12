@@ -18,11 +18,11 @@
             android:name=".ui.music.MusicActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.AuthActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.auth.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,5 +1,6 @@
 package com.example.tunehive.data.retrofit
 
+import com.example.tunehive.data.response.ListMusicResponse
 import com.example.tunehive.data.response.ListMusicResponseItem
 import com.example.tunehive.data.response.UserDetails
 import com.example.tunehive.data.response.UserResponse
@@ -23,7 +24,7 @@ interface ApiService {
         @Field("password") password: String,
     ):UserResponse
 
-    @GET("users/details")
+    @GET("/users/details")
     suspend fun getUser(
         @Header("Authorization") token: String
     ):UserDetails
@@ -35,6 +36,15 @@ interface ApiService {
 
     @GET("/songs")
     suspend fun getAllSongs(
-    ):ListMusicResponseItem
+    ):ListMusicResponse
+
+    @GET("/songs/?page=1&itemPerPage=10")
+    suspend fun getTopSongs(
+    ):List<ListMusicResponseItem>
+
+    @GET("/recommend")
+    suspend fun getRecommendedSongs(
+        @Header("Authorization") token: String
+    ): ListMusicResponse
 
 }
