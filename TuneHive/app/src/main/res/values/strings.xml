@@ -2,7 +2,7 @@
     <string name="app_name">TuneHive</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="text_signup_first">TuneHive Bla Bla \nBla Bla Bla</string>
+    <string name="text_signup_first">TuneHive</string>
     <string name="login_text">Log In</string>
     <string name="btn_signup_text">Sign up free</string>
     <string name="signup_text">Sign up</string>
