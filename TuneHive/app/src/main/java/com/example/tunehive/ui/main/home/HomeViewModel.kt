@@ -31,20 +31,38 @@ class HomeViewModel : ViewModel() {
     private val _listSongs = MutableLiveData<List<ListMusicResponseItem>>()
     val listSongs: LiveData<List<ListMusicResponseItem>> = _listSongs
 
+    private val _listTopSongs = MutableLiveData<List<ListMusicResponseItem>>()
+    val listTopSongs: LiveData<List<ListMusicResponseItem>> = _listTopSongs
+
 
     init {
         // Initialize with all songs
         _filteredSongs.value = _songs.value
         fetchAllSongs()
+        fetchTopSongs()
     }
 
     private fun fetchAllSongs() {
         viewModelScope.launch {
             try {
-                val response = ApiConfig.getApiService().getTopSongs()
+                val response = ApiConfig.getApiService().getAllSongs()
                 Log.d("API Response", response.toString()) // Debug response content
 
                 _listSongs.value = response
+            } catch (e: Exception) {
+                Log.e("API Error", "Failed to fetch songs", e)
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun fetchTopSongs() {
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.getApiService().getTopSongs()
+                Log.d("API Response", response.toString()) // Debug response content
+
+                _listTopSongs.value = response
             } catch (e: Exception) {
                 Log.e("API Error", "Failed to fetch songs", e)
                 e.printStackTrace()

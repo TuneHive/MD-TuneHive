@@ -34,11 +34,11 @@ interface ApiService {
         @Path("id") id: String
     ):ListMusicResponseItem
 
-    @GET("/songs")
+    @GET("/songs/?page=1&itemPerPage=20")
     suspend fun getAllSongs(
-    ):ListMusicResponse
+    ):List<ListMusicResponseItem>
 
-    @GET("/songs/?page=1&itemPerPage=10")
+    @GET("/songs/?page=1&itemPerPage=20&top=true")
     suspend fun getTopSongs(
     ):List<ListMusicResponseItem>
 

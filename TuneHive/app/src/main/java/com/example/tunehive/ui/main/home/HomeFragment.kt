@@ -64,20 +64,23 @@ class HomeFragment : Fragment() {
 
 
         homeViewModel.listSongs.observe(viewLifecycleOwner) { songs ->
-            val mostPopularSongs = songs.take(10)
-            val recommendedSongs = songs.drop(3).take(10)
-
-            mostPopularAdapter = MostPopularAdapter(mostPopularSongs) { item ->
-                val intent = Intent(requireContext(), MusicActivity::class.java)
-                intent.putExtra("extra_music_id", item.id)  // Send the music ID
-                startActivity(intent)            }
-            binding.mostPopularRecyclerView.adapter = mostPopularAdapter
+            val recommendedSongs = songs.take(20)
 
             recommendationAdapter = RecommendationAdapter(recommendedSongs) { item ->
                 val intent = Intent(requireContext(), MusicActivity::class.java)
                 intent.putExtra("extra_music_id", item.id)  // Send the music ID
                 startActivity(intent)            }
             binding.recommendationRecyclerView.adapter = recommendationAdapter
+        }
+        homeViewModel.listTopSongs.observe(viewLifecycleOwner){ topSongs ->
+            val mostPopularSongs = topSongs.take(20)
+
+            mostPopularAdapter = MostPopularAdapter(mostPopularSongs) { item ->
+                val intent = Intent(requireContext(), MusicActivity::class.java)
+                intent.putExtra("extra_music_id", item.id)  // Send the music ID
+                startActivity(intent)
+            }
+            binding.mostPopularRecyclerView.adapter = mostPopularAdapter
         }
 
 
