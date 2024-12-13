@@ -44,10 +44,10 @@ interface ApiService {
     suspend fun getTopSongs(
     ):List<ListMusicResponseItem>
 
-    @GET("/recommend")
+    @GET("/songs/recommendations")
     suspend fun getRecommendedSongs(
         @Header("Authorization") token: String
-    ): ListMusicResponse
+    ):List<ListMusicResponseItem>
 
     @GET("songs/")
     suspend fun searchSong(

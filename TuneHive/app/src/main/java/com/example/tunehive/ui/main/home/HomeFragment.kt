@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var mostPopularAdapter: MostPopularAdapter
     private lateinit var recommendationAdapter: RecommendationAdapter
 
-    private  val tokenViewModel: TokenViewModel by viewModels()
+    private  val tokenViewModel: TokenViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -56,22 +57,29 @@ class HomeFragment : Fragment() {
         binding.mostPopularRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         // Initialize Recommendation Adapter
-        recommendationAdapter = RecommendationAdapter(emptyList()) { item ->
+        recommendationAdapter = RecommendationAdapter(mutableListOf()) { item ->
             val intent = Intent(requireContext(), MusicActivity::class.java)
-            intent.putExtra("extra_music_id", item.id)  // Send the music ID
-            startActivity(intent)        }
+            intent.putExtra("extra_music_id", item.id)
+            startActivity(intent)
+        }
+        binding.recommendationRecyclerView.adapter = recommendationAdapter
         binding.recommendationRecyclerView.adapter = recommendationAdapter
         binding.recommendationRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        tokenViewModel.accessToken.observe(viewLifecycleOwner) { token ->
+            Log.d("AccessTokenObserver", "Token received: $token")
+            if (token.isNotEmpty()) {
+                Log.d("fetch", "asdad received: $token")
 
+                homeViewModel.fetchRecommendedSongs(token)
+            }else{
+                Log.e("AccessTokenObserver", "Token is empty")
+            }
+        }
         homeViewModel.listSongs.observe(viewLifecycleOwner) { songs ->
-            val recommendedSongs = songs.take(20)
-
-            recommendationAdapter = RecommendationAdapter(recommendedSongs) { item ->
-                val intent = Intent(requireContext(), MusicActivity::class.java)
-                intent.putExtra("extra_music_id", item.id)  // Send the music ID
-                startActivity(intent)            }
-            binding.recommendationRecyclerView.adapter = recommendationAdapter
+            if (!songs.isNullOrEmpty()) {
+                recommendationAdapter.updateItems(songs.take(20))
+            }
         }
         homeViewModel.listTopSongs.observe(viewLifecycleOwner){ topSongs ->
             val mostPopularSongs = topSongs.take(20)

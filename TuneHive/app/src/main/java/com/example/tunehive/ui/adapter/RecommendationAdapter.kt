@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.tunehive.R
 import com.example.tunehive.data.response.ListMusicResponseItem
 import com.example.tunehive.databinding.ItemRecomendationBinding
 
 class RecommendationAdapter(
-    private val items: List<ListMusicResponseItem>,
+    private var items: MutableList<ListMusicResponseItem>, // Make items mutable
     private val onItemClick: (ListMusicResponseItem) -> Unit
 ) : RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder>() {
 
@@ -19,6 +20,7 @@ class RecommendationAdapter(
             binding.albumTitle.text = item.name ?: "Unknown Song"
             Glide.with(binding.albumCover.context)
                 .load(item.coverUrl)
+                .placeholder(R.drawable.sample_artist_image)
                 .into(binding.albumCover)
             binding.root.setOnClickListener { onItemClick(item) }
         }
@@ -36,4 +38,11 @@ class RecommendationAdapter(
     }
 
     override fun getItemCount(): Int = items.size
+
+    // Method to update the list and notify the adapter
+    fun updateItems(newItems: List<ListMusicResponseItem>) {
+        items.clear() // Clear the existing list
+        items.addAll(newItems) // Add new items
+        notifyDataSetChanged() // Notify the adapter to refresh
+    }
 }

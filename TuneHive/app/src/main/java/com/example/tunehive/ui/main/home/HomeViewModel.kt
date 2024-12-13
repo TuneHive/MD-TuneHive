@@ -35,15 +35,16 @@ class HomeViewModel : ViewModel() {
 
 
     init {
-        fetchAllSongs()
         fetchTopSongs()
     }
 
-    private fun fetchAllSongs() {
+     fun fetchRecommendedSongs(token: String) {
         viewModelScope.launch {
             try {
-                val response = ApiConfig.getApiService().getAllSongs()
-                Log.d("API Response", response.toString()) // Debug response content
+
+                val bearerToken = "Bearer $token"
+                val response = ApiConfig.getApiService().getRecommendedSongs(bearerToken)
+                Log.d("Recommendation API", _listSongs.value.toString())
 
                 _listSongs.value = response
             } catch (e: Exception) {
