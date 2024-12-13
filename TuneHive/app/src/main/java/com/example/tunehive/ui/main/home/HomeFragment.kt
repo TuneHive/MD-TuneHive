@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,15 +93,19 @@ class HomeFragment : Fragment() {
         binding.recentSearchesRecyclerView.adapter = recentSearchAdapter
         binding.recentSearchesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        homeViewModel.filteredSongs.observe(viewLifecycleOwner) { songs ->
-            songAdapter.submitList(songs)
+        homeViewModel.filteredSongs.observe(viewLifecycleOwner) { filteredSongs ->
+            if (filteredSongs.isEmpty()) {
+                songAdapter.submitList(emptyList())
+            } else {
+                songAdapter.submitList(filteredSongs)
+                binding.recentSearchesLayout.visibility = View.VISIBLE
+            }
         }
 
         homeViewModel.recentSearches.observe(viewLifecycleOwner) { recentSearches ->
             if (recentSearches.isEmpty()) {
                 binding.recentSearchesLayout.visibility = View.GONE
             } else {
-                binding.recentSearchesLayout.visibility = View.VISIBLE
                 recentSearchAdapter.submitList(recentSearches)
             }
             toggleSectionsVisibility(binding.recentSearchesLayout.visibility == View.VISIBLE) // Toggle visibility based on Recent Searches

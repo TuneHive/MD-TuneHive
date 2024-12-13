@@ -20,12 +20,12 @@ class HomeViewModel : ViewModel() {
     val songs: LiveData<List<Song>> = _songs
 
     // Filtered list based on search query
-    private val _filteredSongs = MutableLiveData<List<Song>>()
-    val filteredSongs: LiveData<List<Song>> = _filteredSongs
+    private val _filteredSongs = MutableLiveData<List<ListMusicResponseItem>>()
+    val filteredSongs: LiveData<List<ListMusicResponseItem>> = _filteredSongs
 
     // Recent searches list
-    private val _recentSearches = MutableLiveData<List<Song>>()
-    val recentSearches: LiveData<List<Song>> = _recentSearches
+    private val _recentSearches = MutableLiveData<List<ListMusicResponseItem>>()
+    val recentSearches: LiveData<List<ListMusicResponseItem>> = _recentSearches
 
     private val _listSongs = MutableLiveData<List<ListMusicResponseItem>>()
     val listSongs: LiveData<List<ListMusicResponseItem>> = _listSongs
@@ -35,8 +35,6 @@ class HomeViewModel : ViewModel() {
 
 
     init {
-        // Initialize with all songs
-        _filteredSongs.value = _songs.value
         fetchAllSongs()
         fetchTopSongs()
     }
@@ -69,24 +67,23 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    // Function to perform search
     fun search(query: String) {
-        _filteredSongs.value = if (query.isEmpty()) {
-            _songs.value
-        } else {
-            _songs.value?.filter {
-                it.name.contains(query, ignoreCase = true) || it.artist.contains(query, ignoreCase = true)
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.getApiService().searchSong(name = query)
+                _recentSearches.value = response
+            } catch (e: Exception) {
+                Log.e("API Error", "Failed to search songs", e)
             }
         }
     }
 
     // Add song to recent searches
-    fun addRecentSearch(song: Song) {
+    fun addRecentSearch(song: ListMusicResponseItem) {
         val currentList = _recentSearches.value.orEmpty()
         if (!currentList.contains(song)) {
-            // Add the song to the front of the list
             val updatedList = listOf(song) + currentList
-            _recentSearches.value = updatedList.take(5)  // Limit to 5 recent searches
+            _recentSearches.value = updatedList.take(5) // Limit to 5 recent searches
         }
     }
 }

@@ -12,6 +12,8 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
+
 interface ApiService {
 
     @POST("/user")
@@ -46,5 +48,12 @@ interface ApiService {
     suspend fun getRecommendedSongs(
         @Header("Authorization") token: String
     ): ListMusicResponse
+
+    @GET("songs/")
+    suspend fun searchSong(
+        @Query("name") name: String,
+        @Query("page") page: Int = 1,
+        @Query("itemPerPage") itemPerPage: Int = 20
+    ): List<ListMusicResponseItem>
 
 }
