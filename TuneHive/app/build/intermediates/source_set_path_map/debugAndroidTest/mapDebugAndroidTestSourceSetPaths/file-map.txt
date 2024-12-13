@@ -1,0 +1,5 @@
+com.example.tunehive.test.app-core-1.6.1-0 C:\Users\SJORA\.gradle\caches\transforms-4\2ab2253fa3cd77c7cb3e6434ca33fc6a\transformed\core-1.6.1\res
+com.example.tunehive.test.app-androidTest-1 D:\KuIiah\MD-TuneHive\TuneHive\app\build\generated\res\resValues\androidTest\debug
+com.example.tunehive.test.app-mergeDebugAndroidTestResources-2 D:\KuIiah\MD-TuneHive\TuneHive\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.example.tunehive.test.app-mergeDebugAndroidTestResources-3 D:\KuIiah\MD-TuneHive\TuneHive\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.example.tunehive.test.app-debugAndroidTest-4 D:\KuIiah\MD-TuneHive\TuneHive\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources

@@ -6,21 +6,35 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.tunehive.R
 import com.example.tunehive.data.response.Post
+import com.example.tunehive.data.response.PostResponseItem
+import com.example.tunehive.data.retrofit.ApiConfig
 import com.example.tunehive.databinding.FragmentCommunityBinding
 import com.example.tunehive.ui.adapter.PostAdapter
+import com.example.tunehive.ui.main.TokenViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CommunityFragment : Fragment() {
 
+    private lateinit var communityViewModel: CommunityViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var postAdapter: PostAdapter
-    private lateinit var posts: List<Post> // Replace 'Post' with your actual data model class
+    private var posts: List<PostResponseItem> = listOf()
     private lateinit var fab: FloatingActionButton
     private lateinit var btnUploadLagu: FloatingActionButton
     private lateinit var btnPosting: FloatingActionButton
@@ -29,6 +43,7 @@ class CommunityFragment : Fragment() {
     private lateinit var btnUploadLaguContainer: View
     private lateinit var btnPostingContainer: View
 
+//    private lateinit var tokenViewModel: TokenViewModel
     private val args: CommunityFragmentArgs by navArgs()
 
 
@@ -45,17 +60,15 @@ class CommunityFragment : Fragment() {
         postAdapter = PostAdapter()
         recyclerView.adapter = postAdapter
 
-        // Sample data for posts
-        posts = listOf(
-            Post("Danang Ihsan", "12 Apr 20", "Komen yang udah dengerin lagu terbaru kita"),
-            Post("Danang Ihsan", "12 Apr 20", "Komen yang udah dengerin lagu terbaru kita"),
-            Post("Danang Ihsan", "12 Apr 20", "Komen yang udah dengerin lagu terbaru kita"),
-            // Add more posts as necessary
-        )
-        if (args.postText.isNotEmpty()) {
-            posts = posts + Post("Danang Ihsan", "12 Apr 20", args.postText) // Add the new post
-        }
-        postAdapter.submitList(posts)
+//        tokenViewModel = ViewModelProvider(requireActivity()).get(TokenViewModel::class.java)
+//        fetchPostsFromApi()
+        communityViewModel = ViewModelProvider(this).get(CommunityViewModel::class.java)
+
+        communityViewModel.posts.observe(viewLifecycleOwner, Observer{
+            postAdapter.submitList(it)
+        })
+
+        communityViewModel.fetchPosts()
 
         // Initialize the FAB and other buttons
         fab = binding.fab
@@ -85,8 +98,21 @@ class CommunityFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_community_to_uploadMusicFragment)
         }
 
+        postAdapter.setOnItemClickListener { post ->
+            val action = CommunityFragmentDirections.actionNavigationCommunityToCommentFragment(
+                postId = post.id ?: 0,
+                postText = post.content ?: "",
+                userAvatar = "ic_person_white",  // assuming there's an avatar URL
+                userName = post.user?.fullname ?: "",
+                likeCount = post.likeCount ?: 0
+            )
+            findNavController().navigate(action)
+        }
+
         return binding.root
     }
+
+
 
     private fun showButtonsAndOverlay() {
         // Show the overlay and buttons

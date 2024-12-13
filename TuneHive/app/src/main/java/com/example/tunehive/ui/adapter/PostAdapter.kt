@@ -9,21 +9,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tunehive.R
-import com.example.tunehive.data.response.Post
+import com.example.tunehive.data.response.PostResponseItem
 
-class PostAdapter : ListAdapter<Post, PostAdapter.PostViewHolder>(DIFF_CALLBACK) {
+class PostAdapter : ListAdapter<PostResponseItem, PostAdapter.PostViewHolder>(DIFF_CALLBACK) {
 
-    private var onItemClickListener: ((Post) -> Unit)? = null
+    private var onItemClickListener: ((PostResponseItem) -> Unit)? = null
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Post>() {
-            override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-                // Define the logic to compare items uniquely (e.g., post ID)
-                return oldItem.userName == newItem.userName && oldItem.timestamp == newItem.timestamp
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PostResponseItem>() {
+            override fun areItemsTheSame(oldItem: PostResponseItem, newItem: PostResponseItem): Boolean {
+                return oldItem.id == newItem.id // Compare by post ID
             }
 
-            override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
-                // Define the logic to compare the contents of two items
+            override fun areContentsTheSame(oldItem: PostResponseItem, newItem: PostResponseItem): Boolean {
                 return oldItem == newItem
             }
         }
@@ -45,22 +43,29 @@ class PostAdapter : ListAdapter<Post, PostAdapter.PostViewHolder>(DIFF_CALLBACK)
         private val userName: TextView = itemView.findViewById(R.id.userName)
         private val postTimestamp: TextView = itemView.findViewById(R.id.postTimestamp)
         private val postText: TextView = itemView.findViewById(R.id.postText)
+        private val likeCount: TextView = itemView.findViewById(R.id.likeCount) // Added like count TextView
+        private val commentButton: ImageView = itemView.findViewById(R.id.comment_button)
 
-        fun bind(post: Post) {
-            userName.text = post.userName
-            postTimestamp.text = post.timestamp
-            postText.text = post.text
+        fun bind(post: PostResponseItem) {
+            userName.text = post.user?.fullname
+            postTimestamp.text = post.updatedAt
+            postText.text = post.content
+            likeCount.text = post.likeCount.toString() // Bind the like count
 
-            // Assuming you have an image resource for the user's avatar
-            userAvatar.setImageResource(R.drawable.ic_person_white)  // Replace with actual image source
+            // Set user avatar (use actual avatar image if available)
+            userAvatar.setImageResource(R.drawable.ic_person_white)
 
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(post)
             }
+
+            commentButton.setOnClickListener {
+                onItemClickListener?.invoke(post) // Handle comment button click
+            }
         }
     }
 
-    fun setOnItemClickListener(listener: (Post) -> Unit) {
+    fun setOnItemClickListener(listener: (PostResponseItem) -> Unit) {
         onItemClickListener = listener
     }
 }
