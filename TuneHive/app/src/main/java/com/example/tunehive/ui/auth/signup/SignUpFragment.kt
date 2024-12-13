@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.tunehive.R
+import com.example.tunehive.ui.auth.login.LoginFragment
 
 class SignUpFragment : Fragment() {
 
@@ -30,7 +31,14 @@ class SignUpFragment : Fragment() {
         val usernameEditText: EditText = view.findViewById(R.id.usernameEditText)
         val passwordEditText: EditText = view.findViewById(R.id.passwordEditText)
         val signUpButton: Button = view.findViewById(R.id.signupButton)
+        val loginButton: Button = view.findViewById(R.id.loginButton)
 
+        loginButton.setOnClickListener {
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_container, LoginFragment())
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
         signUpButton.setOnClickListener {
             val email = usernameEditText.text.toString()
             val password = passwordEditText.text.toString()
