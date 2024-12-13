@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/fragment_login.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/fragment_login.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/activity_music.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/activity_music.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/item_artist.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/item_artist.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/item_song.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/item_song.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/item_most_popular.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/item_most_popular.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/item_post_community.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/item_post_community.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/fragment_profile.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/fragment_profile.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/fragment_community.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/fragment_community.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/fragment_my_music.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/fragment_my_music.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/item_recomendation.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/item_recomendation.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/item_spinner.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/item_spinner.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/item_spinner_dropdown.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/item_spinner_dropdown.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/fragment_sign_up.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/fragment_sign_up.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/activity_main.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/fragment_home.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/fragment_post.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/fragment_post.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/activity_auth.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/activity_auth.xml"
+    },
+    {
+        "merged": "com.example.tunehive.app-mergeDebugResources-48:/layout/fragment_upload_music.xml",
+        "source": "com.example.tunehive.app-main-51:/layout/fragment_upload_music.xml"
+    }
+]
